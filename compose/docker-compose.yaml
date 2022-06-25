@@ -1,0 +1,37 @@
+version: '3.0'
+services:
+  vpronginx:
+    image: chandudocker23/devops-vproweb:v1
+    ports:
+      - "80:80"
+
+  vproapp:
+    image: chandudocker23/devops-vproapp:v2
+    ports:
+      - "8080:8080"
+
+  vpromem:
+    image: memcached
+    ports:
+      - "11211:11211"
+
+  vprormq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+  vprodb:
+    image: chandudocker23/devops-vprodb:v1
+    ports:
+      - "3306:3306"
+    volumes:
+      - vprodbdata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=dbpass123
+
+volumes:
+  vprodbdata:
+    driver: local
+
