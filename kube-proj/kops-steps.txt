@@ -1,0 +1,25 @@
+Steps before running kops cluster
+1. create an iam user with admin priviliges
+2. create s3 bucket to store kops state
+3. create an hosted zone in route53
+
+kops create cluster \
+--name learnawsnazure.tk \
+--zones us-east-1c,us-east-1d \
+--node-count 2 \
+--state s3://sp-kop-states \
+--node-size t2.micro \
+--master-size t2.small \
+--node-volume-size 8 \
+--master-volume-size 8 \
+--yes
+
+kops update cluster --name learnawsnazure.tk --state=s3://sp-kops-state --yes
+kops validate cluster --name learnawsnazure.tk --state=s3://sp-kops-state
+kops delete cluster --name learnawsnazure.tk --state=s3://sp-kops-state --yes 
+
+
+
+
+
+
